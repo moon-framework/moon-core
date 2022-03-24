@@ -1,6 +1,6 @@
 <p align="center">
  <img width="100px" src="https://cdn140.picsart.com/313796458203211.png" align="center" alt="Github Readme Stats" />
- <h2 align="center">Profile</h2>
+ <h2 align="center">Moon Core</h2>
 </p>
 
 ### Hi there 👋 This is the GitHub Repo for [Moon](https://github.com/moon-framework)
