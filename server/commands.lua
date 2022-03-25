@@ -57,5 +57,9 @@ end
 
 
 Moon.Commands.Add('test', 'help text here', {}, false, function(source, args)
-    TriggerClientEvent('Moon:Client:PlayerJoined', source)
+    MoonClient('moon:client:ToggleNC', source)
+end)
+
+Moon.Commands.Add('fgm', 'help text here', {}, false, function(source, args)
+    MoonClient('printCoords', source)
 end)

@@ -2,6 +2,8 @@ Moon = {}
 
 Moon.Join = "Test join message."
 
+Moon.Spawn = vec3(-1441.478760, -547.587830, 34.741817)
+
 MoonSecurity = {}
 
 MoonSecurity.eventPass = false
