@@ -12,9 +12,8 @@ RegisterNetEvent('MClient:ToggleNC', function()
 end)
 
 RegisterNetEvent('MClient:PlayerLoaded', function(data)
-    
     SetEntityCoords(PlayerPedId(), data.x, data.y, data.z)
-
+    MoonServer('MServer:PlayerLoaded', source)
 end)
 
 RegisterNetEvent('printCoords', function()
@@ -28,10 +27,7 @@ AddEventHandler('playerDropped', function (reason)
     local coords = GetEntityCoords(PlayerPedId())
     TriggerServerEvent('MServer:PlayerUnload', coords)
 end)
-AddEventHandler('MAC:ban', function ()
-    print('ban')
-end)
-  
+
 Citizen.CreateThread(function()
     while true do
         Wait(300000)

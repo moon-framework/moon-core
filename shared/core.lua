@@ -8,6 +8,7 @@ MoonSecurity = {}
 
 MoonShared = {}
 
+
 local StringCharset = {}
 local NumberCharset = {}
 

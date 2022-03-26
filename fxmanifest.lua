@@ -9,13 +9,15 @@ fx_version 'adamant'
 client_scripts {
     'client/main.lua',
     'client/functions.lua',
-    'client/events.lua'
+    'client/events.lua',
+    'client/player.lua'
 }
 server_scripts {
     'server/main.lua',
     'server/commands.lua',
     'server/functions.lua',
-    'server/events.lua'
+    'server/events.lua',
+    'server/player.lua'
 }
 shared_scripts {
     'shared/core.lua'
