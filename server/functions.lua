@@ -2,8 +2,11 @@
 MoonClient = function(protectedByRaisen, c, ...)
     local args = ...
     if GetPlayerName(c) == nil then return end
+    allowPass(1)
     TriggerClientEvent(protectedByRaisen, c, args)
 end
+
+
 
 function Moon.GetLicense(source)
     local license = ""

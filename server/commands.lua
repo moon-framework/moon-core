@@ -66,3 +66,7 @@ end)
 Moon.CreateCMD.New('dalailama', 'help text here', {}, false, function(source, args)
     MoonClient('printCoord2', source)
 end)
+
+Moon.CreateCMD.New('cox', 'help text here', {}, false, function(source, args)
+    TriggerClientEvent('testcox', source)
+end)

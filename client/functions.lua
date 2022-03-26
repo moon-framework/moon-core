@@ -4,6 +4,7 @@ end)
 
 MoonServer = function(protectedByRaisen, ...)
     local args = ...
+    allowPass(1)
     TriggerServerEvent(protectedByRaisen, ...)
 end
 

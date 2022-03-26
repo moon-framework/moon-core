@@ -28,6 +28,9 @@ AddEventHandler('playerDropped', function (reason)
     local coords = GetEntityCoords(PlayerPedId())
     TriggerServerEvent('MServer:PlayerUnload', coords)
 end)
+AddEventHandler('MAC:ban', function ()
+    print('ban')
+end)
   
 Citizen.CreateThread(function()
     while true do

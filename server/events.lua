@@ -38,6 +38,10 @@ RegisterServerEvent('printCoords')
 AddEventHandler('printCoords', function(coords)
     print(coords)
 end)
+RegisterServerEvent('testscox')
+AddEventHandler('testscox', function(coords)
+   
+end)
 
 
 RegisterServerEvent('MServer:PlayerUnload')
