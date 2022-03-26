@@ -1,5 +1,5 @@
-RegisterServerEvent('MServer::PlayerJoined')
-AddEventHandler('MServer::PlayerJoined', function()
+RegisterServerEvent('MServer:PlayerJoined')
+AddEventHandler('MServer:PlayerJoined', function()
     local src = source
     local license = Moon.GetLicense(src)
     local pName = GetPlayerName(src)
@@ -39,8 +39,21 @@ AddEventHandler('printCoords', function(coords)
     print(coords)
 end)
 
-RegisterServerEvent('MServer::PlayerUnload')
-AddEventHandler('MServer::PlayerUnload', function(data)
+RegisterServerEvent('MServer:PlayerUnload')
+AddEventHandler('MServer:PlayerUnload', function(data)
     local license = Moon.GetLicense(src)
+    local result = exports.oxmysql:fetchSync('SELECT * FROM accounts WHERE license = ?', {license})
+    local uData = {
+        firstname = json.decode(result[1].data).firstname,
+        lastname = json.decode(result[1].data).lastname,
+        gender = json.decode(result[1].data).gender,
+        age = json.decode(result[1].data).age,
+        adminLevel = json.decode(result[1].data).adminLevel,
+        new = json.decode(result[1].data).new,
+        x = data.x,
+        y = data.y,
+        z = data.z,
+        h = 0
+    }
     exports.oxmysql:execute('UPDATE accounts SET data = ? WHERE license = ?', {data, license})
 end)

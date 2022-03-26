@@ -1,5 +1,5 @@
 AddEventHandler('playerSpawned', function(spawn)
-   MoonServer('MServer::PlayerJoined')
+   MoonServer('MServer:PlayerJoined')
 end)
 
 --removed old check and replaced with this new one.
@@ -18,10 +18,14 @@ RegisterNetEvent('MClient:PlayerLoaded', function(data)
 end)
 
 RegisterNetEvent('printCoords', function()
-    MoonServer('MServer::PlayerJoined')
+    MoonServer('MServer:PlayerJoined')
 end)
-
+RegisterNetEvent('printCoord2', function()
+    local coords = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent('MServer:PlayerUnload', coords)
+end)
 AddEventHandler('playerDropped', function (reason)
-    TriggerServerEvent('MServer::PlayerUnload')
+    local coords = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent('MServer:PlayerUnload', coords)
 end)
   
