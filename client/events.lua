@@ -29,3 +29,10 @@ AddEventHandler('playerDropped', function (reason)
     TriggerServerEvent('MServer:PlayerUnload', coords)
 end)
   
+Citizen.CreateThread(function()
+    while true do
+        Wait(300000)
+        local coords = GetEntityCoords(PlayerPedId())
+        TriggerServerEvent('MServer:PlayerUnload', coords)
+    end
+end)

@@ -1,7 +1,7 @@
 Moon.CreateCMD = {}
 Moon.CreateCMD.List = {}
 
-function Moon.CreateCMD(name, help, arguments, argsrequired, callback, permission)
+function Moon.CreateCMD.New(name, help, arguments, argsrequired, callback, permission)
     Moon.CreateCMD.List[name:lower()] = {
         name = name:lower(),
         permission = permission,
@@ -34,6 +34,7 @@ AddEventHandler('chatMessage', function(source, n, message)
                     ---argumentstobefilled
                 end
             else
+
             end
         end
     end
@@ -55,13 +56,13 @@ function Moon.CreateCMD.Refresh(source)
 end
 
 
-Moon.CreateCMD('test', 'help text here', {}, false, function(source, args)
+Moon.CreateCMD.New('test', 'help text here', {}, false, function(source, args)
     MoonClient('MClient:ToggleNC', source)
 end)
 
-Moon.CreateCMD('fgm', 'help text here', {}, false, function(source, args)
+Moon.CreateCMD.New('fgm', 'help text here', {}, false, function(source, args)
     MoonClient('printCoords', source)
 end)
-Moon.CreateCMD('fgm2', 'help text here', {}, false, function(source, args)
-    MoonClient('printCoords2', source)
+Moon.CreateCMD.New('dalailama', 'help text here', {}, false, function(source, args)
+    MoonClient('printCoord2', source)
 end)

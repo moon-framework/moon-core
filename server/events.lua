@@ -39,8 +39,10 @@ AddEventHandler('printCoords', function(coords)
     print(coords)
 end)
 
+
 RegisterServerEvent('MServer:PlayerUnload')
 AddEventHandler('MServer:PlayerUnload', function(data)
+    local src = source
     local license = Moon.GetLicense(src)
     local result = exports.oxmysql:fetchSync('SELECT * FROM accounts WHERE license = ?', {license})
     local uData = {
@@ -55,5 +57,6 @@ AddEventHandler('MServer:PlayerUnload', function(data)
         z = data.z,
         h = 0
     }
-    exports.oxmysql:execute('UPDATE accounts SET data = ? WHERE license = ?', {data, license})
+    print(json.encode(uData))
+    exports.oxmysql:execute('UPDATE accounts SET data = ? WHERE license = ?', {json.encode(uData), license})
 end)
