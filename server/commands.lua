@@ -1,8 +1,8 @@
-Moon.Commands = {}
-Moon.Commands.List = {}
+Moon.CreateCMD = {}
+Moon.CreateCMD.List = {}
 
-function Moon.Commands.Add(name, help, arguments, argsrequired, callback, permission)
-    Moon.Commands.List[name:lower()] = {
+function Moon.CreateCMD(name, help, arguments, argsrequired, callback, permission)
+    Moon.CreateCMD.List[name:lower()] = {
         name = name:lower(),
         permission = permission,
         help = help,
@@ -13,7 +13,7 @@ function Moon.Commands.Add(name, help, arguments, argsrequired, callback, permis
 end
 
 RegisterNetEvent('updatecmds', function()
-    Moon.Commands.Refresh(source)
+    Moon.CreateCMD.Refresh(source)
 end)
 
 AddEventHandler('chatMessage', function(source, n, message)
@@ -22,16 +22,15 @@ AddEventHandler('chatMessage', function(source, n, message)
         local args = MoonShared.SplitStr(message, ' ')
         local command = string.gsub(args[1]:lower(), '/', '')
         CancelEvent()
-        if Moon.Commands.List[command] then
-            --local hasPerm = QBCore.Functions.HasPermission(src, QBCore.Commands.List[command].permission)
+        if Moon.CreateCMD.List[command] then
             local hasPerm = true
             local isPrincipal = IsPlayerAceAllowed(src, 'command')
             table.remove(args, 1)
             if hasPerm or isPrincipal then
-                if (Moon.Commands.List[command].argsrequired and #Moon.Commands.List[command].arguments ~= 0 and args[#Moon.Commands.List[command].arguments] == nil) then
+                if (Moon.CreateCMD.List[command].argsrequired and #Moon.CreateCMD.List[command].arguments ~= 0 and args[#Moon.CreateCMD.List[command].arguments] == nil) then
                     ---argumentstobefilled
                 else
-                    Moon.Commands.List[command].callback(src, args)
+                    Moon.CreateCMD.List[command].callback(src, args)
                     ---argumentstobefilled
                 end
             else
@@ -40,11 +39,11 @@ AddEventHandler('chatMessage', function(source, n, message)
     end
 end)
 
-function Moon.Commands.Refresh(source)
+function Moon.CreateCMD.Refresh(source)
     local src = source
     local suggestions = {}
     if Player then
-        for command, info in pairs(Moon.Commands.List) do
+        for command, info in pairs(Moon.CreateCMD.List) do
             suggestions[#suggestions + 1] = {
                 name = '/' .. command,
                 help = info.help,
@@ -56,10 +55,10 @@ function Moon.Commands.Refresh(source)
 end
 
 
-Moon.Commands.Add('test', 'help text here', {}, false, function(source, args)
-    MoonClient('moon:client:ToggleNC', source)
+Moon.CreateCMD('test', 'help text here', {}, false, function(source, args)
+    MoonClient('MClient:ToggleNC', source)
 end)
 
-Moon.Commands.Add('fgm', 'help text here', {}, false, function(source, args)
+Moon.CreateCMD('fgm', 'help text here', {}, false, function(source, args)
     MoonClient('printCoords', source)
 end)

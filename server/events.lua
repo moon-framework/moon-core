@@ -1,5 +1,5 @@
-RegisterServerEvent('Moon:Server:PlayerJoined')
-AddEventHandler('Moon:Server:PlayerJoined', function()
+RegisterServerEvent('MServer::PlayerJoined')
+AddEventHandler('MServer::PlayerJoined', function()
     local src = source
     local license = Moon.GetLicense(src)
     local pName = GetPlayerName(src)
@@ -11,7 +11,7 @@ AddEventHandler('Moon:Server:PlayerJoined', function()
             y = json.decode(result[1].data).y,
             z = json.decode(result[1].data).z
         }
-        MoonClient('Moon:Client:PlayerLoaded', src, uData)
+        MoonClient('MClient:PlayerLoaded', src, uData)
     else
         local accountData = {
             name = pName,
@@ -31,7 +31,7 @@ AddEventHandler('Moon:Server:PlayerJoined', function()
         }
         exports.oxmysql:execute('INSERT INTO accounts(user, license, data) VALUES (?, ?, ?)', {accountData.name, accountData.license, json.encode(uData)})
     end
-    MoonClient('Moon:Client:PlayerLoaded', src, uData)
+    MoonClient('MClient:PlayerLoaded', src, uData)
 end)
 
 RegisterServerEvent('printCoords')
@@ -39,8 +39,8 @@ AddEventHandler('printCoords', function(coords)
     print(coords)
 end)
 
-RegisterServerEvent('Moon:Server:PlayerUnload')
-AddEventHandler('Moon:Server:PlayerUnload', function(data)
+RegisterServerEvent('MServer::PlayerUnload')
+AddEventHandler('MServer::PlayerUnload', function(data)
     local license = Moon.GetLicense(src)
     exports.oxmysql:execute('UPDATE accounts SET data = ? WHERE license = ?', {data, license})
 end)
