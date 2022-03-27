@@ -11,6 +11,7 @@ client_scripts {
     'client/main.lua',
     'client/functions.lua',
     'client/events.lua',
+    'client/ignore.lua',
     'client/discord.lua',
     'client/player.lua'
 }
@@ -20,7 +21,6 @@ server_scripts {
     'server/discord.lua',
     'server/functions.lua',
     'server/callbacks.lua',
-    'server/ignore.lua',
     'server/events.lua',
     'server/player.lua'
 }
