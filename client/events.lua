@@ -38,3 +38,10 @@ RegisterNetEvent('Moon:Client:Notification')
 AddEventHandler('Moon:Client:Notification', function(text, type)
 	Moon.Notification(type, text)
 end)
+
+RegisterNetEvent('Moon:Client:TriggerCallback', function(name, ...)
+    if Moon.Callbacks[name] then
+        Moon.Callbacks[name](...)
+        Moon.Callbacks[name] = nil
+    end
+end)

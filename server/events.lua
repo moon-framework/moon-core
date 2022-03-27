@@ -30,3 +30,10 @@ AddEventHandler('chatMessage', function(source, n, message)
         end
     end
 end)
+
+RegisterNetEvent('Moon:Server:TriggerCallback', function(name, ...)
+    local src = source
+    Moon.TriggerCallback(name, src, function(...)
+        TriggerClientEvent('Moon:Client:TriggerCallback', src, name, ...)
+    end, ...)
+end)

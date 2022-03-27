@@ -79,6 +79,15 @@ Moon.SavePlayer = function(source, pData, pMeta)
 end
 
 
+
+Moon.TriggerCallback = function(name, cb, ...)
+    local src = source
+    if Moon.Callbacks[name] then
+        Moon.Callbacks[name](src, cb, ...)
+    end
+end
+
+
 Moon.SetPlayerMeta = function(source, meta, value)
     local src = source
     local PlayerMeta = Moon.GetPlayerMeta(source)

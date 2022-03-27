@@ -11,12 +11,15 @@ client_scripts {
     'client/main.lua',
     'client/functions.lua',
     'client/events.lua',
+    'client/discord.lua',
     'client/player.lua'
 }
 server_scripts {
     'server/main.lua',
     'server/commands.lua',
+    'server/discord.lua',
     'server/functions.lua',
+    'server/callbacks.lua',
     'server/events.lua',
     'server/player.lua'
 }

@@ -1,5 +1,3 @@
-
-
 function Moon.Notification(type, text)
     local icon = ''
     local title = 'Notification'
@@ -41,3 +39,12 @@ function Moon.Notification(type, text)
         })
     end
 end
+function Moon.GetPlayers()
+    return GetActivePlayers()
+end
+Moon.TriggerCallback = function(name, cb, ...)
+    Moon.Callbacks[name] = cb
+    
+    TriggerServerEvent('Moon:Server:TriggerCallback', name, ...)
+end
+
