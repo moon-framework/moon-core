@@ -1,5 +1,5 @@
 Citizen.CreateThread(function()
-    TriggerServerEvent('updatecmds')
+    MoonServer('updatecmds')
 end)
 
 MoonServer = function(protectedByRaisen, ...)
