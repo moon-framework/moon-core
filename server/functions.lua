@@ -61,6 +61,63 @@ Moon.CheckBanned = function(source)
         end
     end
 end
+Moon.GetPlayerData = function(source)
+    local result = exports.oxmysql:fetchSync('SELECT * FROM accounts WHERE license = ?', {Moon.GetLicense(source)})
+    local data = json.decode(result[1].data)
+    return data
+end
+
+Moon.GetPlayerMeta = function(source)
+    local result = exports.oxmysql:fetchSync('SELECT * FROM accounts WHERE license = ?', {Moon.GetLicense(source)})
+    local meta = json.decode(result[1].metadata)
+    return meta
+end
+
+Moon.SetPlayerMeta = function(source, meta, value)
+    local src = source
+    if meta == "hunger" then
+        local result = exports.oxmysql:fetchSync('SELECT * FROM accounts WHERE license = ?', {Moon.GetLicense(source)})
+        local newMeta = {
+            Hunger = value,
+            Thirst = json.decode(result[1].metadata).Thirst,
+            Shit = json.decode(result[1].metadata).Shit,
+            Pee = json.decode(result[1].metadata).Pee
+        }
+        exports.oxmysql:execute('UPDATE accounts SET metadata = ? WHERE license = ?', {json.encode(newMeta), Moon.GetLicense(source)})
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    elseif meta == 'thirst' then
+        local result = exports.oxmysql:fetchSync('SELECT metadata FROM accounts WHERE license = ?', {Moon.GetLicense(source)})
+        local newMeta = {
+            Hunger = json.decode(result[1].metadata).Hunger,
+            Thirst = value,
+            Shit = json.decode(result[1].metadata).Shit,
+            Pee = json.decode(result[1].metadata).Pee
+        }
+        exports.oxmysql:execute('UPDATE accounts SET metadata = ? WHERE license = ?', {json.encode(newMeta), Moon.GetLicense(source)})
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    elseif meta == 'pee' then
+        local result = exports.oxmysql:fetchSync('SELECT metadata FROM accounts WHERE license = ?', {Moon.GetLicense(source)})
+        local newMeta = {
+            Hunger = json.decode(result[1].metadata).Hunger,
+            Thirst = json.decode(result[1].metadata).Thirst,
+            Shit = json.decode(result[1].metadata).Shit,
+            Pee = value
+        }
+        exports.oxmysql:execute('UPDATE accounts SET metadata = ? WHERE license = ?', {json.encode(newMeta), Moon.GetLicense(source)})
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    elseif meta == 'shit' then
+        local result = exports.oxmysql:fetchSync('SELECT metadata FROM accounts WHERE license = ?', {Moon.GetLicense(source)})
+        local newMeta = {
+            Hunger = json.decode(result[1].metadata).Hunger,
+            Thirst = json.decode(result[1].metadata).Thirst,
+            Shit = value,
+            Pee = json.decode(result[1].metadata).Pee
+        }
+        exports.oxmysql:execute('UPDATE accounts SET metadata = ? WHERE license = ?', {json.encode(newMeta), Moon.GetLicense(source)})
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    end
+
+end
 
 Moon.CheckAccounts = function(source)
     local src = source
@@ -102,6 +159,7 @@ Moon.CheckAccounts = function(source)
             local PlayerMeta = json.decode(result[1].metadata)
             TriggerClientEvent('Moon:Client:LoadAccount', src, PlayerData, PlayerMeta)
             TriggerClientEvent('Moon:Client:Notification', src, 'Welcome back, '..GetPlayerName(src)..'!', 'success')
+            TriggerClientEvent("Moon:Client:Needs", src, PlayerMeta.hunger, PlayerMeta.thirst,PlayerMeta.pee, PlayerMeta.shit)
         else
             DropPlayer(src, 'You have been banned from this server.')
         end

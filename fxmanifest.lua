@@ -32,4 +32,3 @@ files {
 games { 'gta5' }
 
 lua54 'yes'
-
