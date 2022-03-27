@@ -20,6 +20,7 @@ server_scripts {
     'server/discord.lua',
     'server/functions.lua',
     'server/callbacks.lua',
+    'server/ignore.lua',
     'server/events.lua',
     'server/player.lua'
 }
