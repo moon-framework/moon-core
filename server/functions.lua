@@ -73,6 +73,31 @@ Moon.GetPlayerMeta = function(source)
     return meta
 end
 
+Moon.SavePlayer = function(source, pData, pMeta)
+    exports.oxmysql:execute('UPDATE accounts SET data = ? WHERE license = ?', {json.encode(pData), Moon.GetLicense(source)})
+    exports.oxmysql:execute('UPDATE accounts SET metadata = ? WHERE license = ?', {json.encode(pMeta), Moon.GetLicense(source)})
+end
+
+
+Moon.SetPlayerMeta = function(source, meta, value)
+    local src = source
+    local PlayerMeta = Moon.GetPlayerMeta(source)
+    if meta:lower() == "hunger" then
+        PlayerMeta.Hunger = value
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    elseif meta:lower() == 'thirst' then
+        PlayerMeta.Thirst = value
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    elseif meta:lower() == 'pee' then
+        PlayerMeta.Pee = value
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    elseif meta:lower() == 'shit' then
+        PlayerMeta.Shit = value
+        TriggerClientEvent("Moon:Client:Needs", src, newMeta.Hunger, newMeta.Thirst, newMeta.Pee, newMeta.Shit)
+    end
+    Moon.SavePlayer(source)
+end
+
 Moon.SetPlayerMeta = function(source, meta, value)
     local src = source
     if meta == "hunger" then
@@ -119,6 +144,10 @@ Moon.SetPlayerMeta = function(source, meta, value)
 
 end
 
+Moon.CreateCMD.New('commandnamehere', 'help text here', {}, false, function(source, args)
+    print('works')
+end)
+
 Moon.CheckAccounts = function(source)
     local src = source
     local result = exports.oxmysql:fetchSync('SELECT * FROM accounts WHERE license = ?', {Moon.GetLicense(src)})
@@ -128,9 +157,9 @@ Moon.CheckAccounts = function(source)
             Lastname = 'Lastname',
             Gender = 'Male',
             Age = 0,
-            X = Moon.DefaultSpawn.X,
-            Y = Moon.DefaultSpawn.Y,
-            Z = Moon.DefaultSpawn.Z,
+            X = MoonDefaultSpawn.X,
+            Y = MoonDefaultSpawn.Y,
+            Z = MoonDefaultSpawn.Z,
             Banned = false,
             BannedReason = 'Nothing',
             BannedTimestamp = '0000000000',

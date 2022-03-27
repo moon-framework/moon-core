@@ -5,6 +5,16 @@ exports('GetCoreObject', function()
     return Moon
 end)
 
+CreateThread(function()
+	while true do
+		Wait(2000)
+		if not IsPedInAnyVehicle(PlayerPedId()) then
+			DisplayRadar(false)
+		elseif IsPedInAnyVehicle(PlayerPedId()) then
+			DisplayRadar(true)
+		end
+	end
+end)
 
 CreateThread(function()-- https://docs.fivem.net/natives/?_0x6806C51AD12B83B8
     while true do

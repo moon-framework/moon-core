@@ -5,7 +5,7 @@ MoonShared = {}
 local StringCharset = {}
 local NumberCharset = {}
 
-Moon.DefaultSpawn = {
+MoonDefaultSpawn = {
     X = -1441.478760,
     Y = -547.587830,
     Z = 34.741817
