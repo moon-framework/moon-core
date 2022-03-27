@@ -90,8 +90,8 @@ Moon.CheckAccounts = function(source)
         local PlayerMeta = {
             Hunger = 100,
             Thirst = 100,
-            Shit = 100,
-            Pee = 100
+            Shit = 0,
+            Pee = 0
         }
         exports.oxmysql:execute('INSERT INTO accounts(user, license, data, metadata) VALUES (?, ?, ?, ?)', {GetPlayerName(src), Moon.GetLicense(src), json.encode(PlayerData), json.encode(PlayerMeta)})
         TriggerClientEvent('Moon:Client:Notification', src, 'Welcome to '..MoonServerName..', '..GetPlayerName(src)..'!', 'success')
