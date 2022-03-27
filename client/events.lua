@@ -1,37 +1,40 @@
+PlayerData = {}
+PlayerMeta = {}
+
 AddEventHandler('playerSpawned', function(spawn)
-   MoonServer('MServer:PlayerJoined')
+    TriggerServerEvent('Moon:Server:CheckAccount')
 end)
-
---removed old check and replaced with this new one.
-RegisterNetEvent('MClient:ToggleNC', function()
-    ToggleNoClipMode()
-    SetRainLevel(0.0)
-    SetWeatherTypePersist('CLEAR')
-    SetWeatherTypeNow('CLEAR')
-    SetWeatherTypeNowPersist('CLEAR')
-end)
-
-RegisterNetEvent('MClient:PlayerLoaded', function(data)
-    SetEntityCoords(PlayerPedId(), data.x, data.y, data.z)
-    MoonServer('MServer:PlayerLoaded', source)
-end)
-
-RegisterNetEvent('printCoords', function()
-    MoonServer('MServer:PlayerJoined')
-end)
-RegisterNetEvent('printCoord2', function()
-    local coords = GetEntityCoords(PlayerPedId())
-    TriggerServerEvent('MServer:PlayerUnload', coords)
-end)
-AddEventHandler('playerDropped', function (reason)
-    local coords = GetEntityCoords(PlayerPedId())
-    TriggerServerEvent('MServer:PlayerUnload', coords)
-end)
-
 Citizen.CreateThread(function()
-    while true do
-        Wait(300000)
-        local coords = GetEntityCoords(PlayerPedId())
-        TriggerServerEvent('MServer:PlayerUnload', coords)
+    TriggerServerEvent('Moon:Server:CheckAccount')
+end)
+ 
+local function setModel(_model)
+    local model = _model
+    if IsModelInCdimage(model) and IsModelValid(model) then
+        RequestModel(model)
+        while not HasModelLoaded(model) do
+            Citizen.Wait(0)
+        end
+        SetPlayerModel(PlayerId(), model)
+        if model ~= "mp_f_freemode_01" and model ~= "mp_m_freemode_01" then 
+            SetPedRandomComponentVariation(PlayerPedId(), true)
+        else
+            SetPedComponentVariation(PlayerPedId(), 11, 0, 240, 0)
+            SetPedComponentVariation(PlayerPedId(), 8, 0, 240, 0)
+            SetPedComponentVariation(PlayerPedId(), 11, 6, 1, 0)
+        end
+        SetModelAsNoLongerNeeded(model)
     end
+end
+
+RegisterNetEvent('Moon:Client:LoadAccount', function(pData, pMeta)
+    PlayerData = pData
+    PlayerMeta = pMeta
+    setModel('mp_m_freemode_01')
+    SetEntityCoords(PlayerPedId(), PlayerData.X, PlayerData.Y, PlayerData.Z)
+end)
+
+RegisterNetEvent('Moon:Client:Notification')
+AddEventHandler('Moon:Client:Notification', function(text, type)
+	Moon.Notification(type, text)
 end)

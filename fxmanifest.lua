@@ -6,6 +6,7 @@ author 'Moon Dev. Team'
 description 'A framework that targets performance and optimization.'
 repository 'https://github.com/moon-framework'
 fx_version 'adamant'
+ui_page 'html/index.html'
 client_scripts {
     'client/main.lua',
     'client/functions.lua',
@@ -21,6 +22,11 @@ server_scripts {
 }
 shared_scripts {
     'shared/core.lua'
+}
+
+files {
+	'html/*.*',
+	'html/sound/*.*'
 }
 
 games { 'gta5' }
