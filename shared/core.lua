@@ -96,3 +96,7 @@ MoonShared.Round = function(value, numDecimalPlaces)
     local power = 10 ^ numDecimalPlaces
     return math.floor((value * power) + 0.5) / (power)
 end
+
+Moon.Items = {
+    ['item'] = {['name'] = 'testitem', ['label'] = 'Test Item', ['description'] = 'A test Item', ['photo'] = ''}, 
+}
