@@ -6,10 +6,15 @@ function Moon.GiveItem(source,type,item,amount)
     if item then
         if existingitems then
             if existingitems[1].itemname == item.name then
-                local itemdata = {
-                    itemamount = existingitems[1].itemamount + amount
-                }
-                exports.oxmysql:execute('UPDATE inventories SET data = ? WHERE identifier = ? AND type = ?', {json.encode(itemdata)}, license, type)
+                local newamount = existingitems[1].itemamount + amount
+                if newamount <= item.maxamount then
+                    local itemdata = {
+                        itemamount = newamount
+                    }
+                    exports.oxmysql:execute('UPDATE inventories SET data = ? WHERE identifier = ? AND type = ?', {json.encode(itemdata)}, license, type)
+                else
+                    TriggerClientEvent('Moon:Client:Notification', source,"You cannot carry anymore of this item!", 'error')
+                end
             else
                 local itemdata = {
                     itemname = item.name,
