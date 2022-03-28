@@ -3,6 +3,7 @@ PlayerMeta = {}
 
 AddEventHandler('playerSpawned', function(spawn)
     TriggerServerEvent('Moon:Server:CheckAccount')
+    TriggerServerEvent('Moon:Server:AssignSID')
 end)
 Citizen.CreateThread(function()
     TriggerServerEvent('Moon:Server:CheckAccount')

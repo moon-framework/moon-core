@@ -37,3 +37,8 @@ RegisterNetEvent('Moon:Server:TriggerCallback', function(name, ...)
         TriggerClientEvent('Moon:Client:TriggerCallback', src, name, ...)
     end, ...)
 end)
+
+RegisterNetEvent('Moon:Server:AssignSID')
+AddEventHandler(('Moon:Server:AssignSID'), function (source)
+	exports.oxmysql:execute('UPDATE accounts SET server-source = ? WHERE license = ?', {source, Moon.GetLicense(source)})
+end)

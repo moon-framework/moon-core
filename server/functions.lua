@@ -37,6 +37,11 @@ function Moon.GetPlayerId(source)
     end
 end
 
+function Moon.GetPlayerSource(id)
+    local sid = exports.oxmysql:fetchSync('SELECT server-source FROM accounts WHERE license = ?', {Moon.GetLicense(tonumber(id))})
+    return tonumber(sid)
+end
+
 function Moon.CreateCMD.Refresh(source)
     local src = source
     local suggestions = {}
