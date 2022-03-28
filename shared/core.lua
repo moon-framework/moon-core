@@ -98,5 +98,5 @@ MoonShared.Round = function(value, numDecimalPlaces)
 end
 
 Moon.Items = {
-    ['item'] = {['name'] = 'testitem', ['label'] = 'Test Item', ['maxamount'] = 15, [weight] = 1000, ['description'] = 'A test Item', ['photo'] = ''}, 
+    ['item'] = {['name'] = 'testitem', ['label'] = 'Test Item', ['maxamount'] = 15, ['weight'] = 1000, ['description'] = 'A test Item', ['photo'] = ''}, 
 }
