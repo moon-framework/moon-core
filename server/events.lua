@@ -1,10 +1,56 @@
-RegisterNetEvent('updatecmds', function()
-    Moon.CreateCMD.Refresh(source)
-end)
-
+------------------ Accounts ------------------
 RegisterNetEvent('Moon:Server:CheckAccount', function()
     local src = source
     Moon.CheckAccounts(src)
+end)
+
+RegisterNetEvent('Moon:Server:AssignSID')
+AddEventHandler(('Moon:Server:AssignSID'), function (source)
+    local src = source
+    Moon.AssignSID(src)
+end)
+
+----------------- CallBack ----------------------
+
+RegisterServerEvent('Moon:Server:TriggerCallback')
+AddEventHandler('Moon:Server:TriggerCallback', function(name, requestId, ...)
+	local playerId = source
+
+	Moon.TriggerCallback(name, requestId, playerId, function(...)
+		TriggerClientEvent('moon:serverCallback', playerId, requestId, ...)
+	end, ...)
+end)
+---------------- Inventory Events ----------------
+
+RegisterNetEvent('Moon:Server:UseItem', function(item)
+    local src = source
+    Moon.Functions.UseItem(src, item)
+end)
+
+
+RegisterNetEvent('checkforitemamount', function(plate)
+    local license = Moon.GetLicense(source)
+    local result = exports.oxmysql:fetchSync('SELECT * FROM inventories WHERE identifier = ? ', {license})
+    if result[1] then
+        local inv = json.decode(result[1].data)
+        if inv.amount == 0 then
+            exports.oxmysql:execute('DELETE FROM inventories WHERE id = ?', {result[1].id})
+        end
+    end
+    local resultb = exports.oxmysql:fetchSync('SELECT * FROM vehiclesdata WHERE plate = ?',{plate})
+    if resultb[1] then
+        local inv = json.decode(resultb[1].data)
+        if inv.amount == 0 then
+            exports.oxmysql:execute('DELETE FROM vehiclesdata WHERE plate = ?', {plate})
+        end
+    end
+end)
+
+
+----------------------- Chat/Commands events --------------------------
+
+RegisterNetEvent('updatecmds', function()
+    Moon.CreateCMD.Refresh(source)
 end)
 
 AddEventHandler('chatMessage', function(source, n, message)
@@ -29,16 +75,4 @@ AddEventHandler('chatMessage', function(source, n, message)
             end
         end
     end
-end)
-
-RegisterNetEvent('Moon:Server:TriggerCallback', function(name, ...)
-    local src = source
-    Moon.TriggerCallback(name, src, function(...)
-        TriggerClientEvent('Moon:Client:TriggerCallback', src, name, ...)
-    end, ...)
-end)
-
-RegisterNetEvent('Moon:Server:AssignSID')
-AddEventHandler(('Moon:Server:AssignSID'), function (source)
-	exports.oxmysql:execute('UPDATE accounts SET server-source = ? WHERE license = ?', {source, Moon.GetLicense(source)})
 end)

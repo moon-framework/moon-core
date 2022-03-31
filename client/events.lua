@@ -1,12 +1,16 @@
 PlayerData = {}
 PlayerMeta = {}
 
+---------------------- Account Loading -----------------------
+------ DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING --------
+
 AddEventHandler('playerSpawned', function(spawn)
     TriggerServerEvent('Moon:Server:CheckAccount')
     TriggerServerEvent('Moon:Server:AssignSID')
 end)
+
 Citizen.CreateThread(function()
-    TriggerServerEvent('Moon:Server:CheckAccount')
+    TriggerServerEvent('Moon:Server:CheckAccount') -- debugging+
 end)
  
 local function setModel(_model)
@@ -35,9 +39,12 @@ RegisterNetEvent('Moon:Client:LoadAccount', function(pData, pMeta)
     SetEntityCoords(PlayerPedId(), PlayerData.X, PlayerData.Y, PlayerData.Z)
 end)
 
-RegisterNetEvent('Moon:Client:Notification')
-AddEventHandler('Moon:Client:Notification', function(text, type)
-	Moon.Notification(type, text)
+-------------------- Call Backs ---------------------------
+
+RegisterNetEvent('moon:serverCallback')
+AddEventHandler('moon:serverCallback', function(requestId, ...)
+	Moon.ServerCallbacks[requestId](...)
+	Moon.ServerCallbacks[requestId] = nil
 end)
 
 RegisterNetEvent('Moon:Client:TriggerCallback', function(name, ...)
@@ -45,4 +52,15 @@ RegisterNetEvent('Moon:Client:TriggerCallback', function(name, ...)
         Moon.Callbacks[name](...)
         Moon.Callbacks[name] = nil
     end
+end)
+
+-------------------- Other Events ---------------------------
+
+RegisterNetEvent('Moon:Client:UseItem', function(item)
+    TriggerServerEvent('Moon:Server:UseItem', item)
+end)
+
+RegisterNetEvent('Moon:Client:Notification')
+AddEventHandler('Moon:Client:Notification', function(text, type)
+	Moon.Notification(type, text)
 end)

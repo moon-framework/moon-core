@@ -21,9 +21,10 @@ server_scripts {
     'server/discord.lua',
     'server/functions.lua',
     'server/callbacks.lua',
-    'server/events.lua',
     'server/inventory.lua',
-    'server/player.lua'
+    'server/events.lua',
+    'server/player.lua',
+    'server/items.lua'
 }
 shared_scripts {
     'shared/core.lua'

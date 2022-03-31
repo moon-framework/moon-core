@@ -1,6 +1,9 @@
 Moon = {}
 Moon.Shared = MoonShared
-Moon.Callbacks = {}
+Moon.ServerCallbacks = {}
+Moon.Items = MoonItems
+Moon.UseableItems = {}
+Moon.Functions = {}
 
 exports('GetCoreObject', function()
     return Moon

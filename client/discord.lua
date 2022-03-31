@@ -1,6 +1,6 @@
 local WaitTime = 2500 -- How often do you want to update the status (In MS)
 
-local DiscordAppId = 
+local DiscordAppId = 1 
 local DiscordAppAsset = 'server'
 local UseKMH = true
 	

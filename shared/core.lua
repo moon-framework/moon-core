@@ -47,13 +47,23 @@ Config.BlacklistedPeds = {
     [`s_f_y_cop_01`] = true,
     [`s_m_y_hwaycop_01`] = true,
 }
+
+--------- Settings --------------
+MoonServerName = 'Moon Framework'
+
 MoonDefaultSpawn = {
     X = -1441.478760,
     Y = -547.587830,
     Z = 34.741817
 }
 
-MoonServerName = 'Moon Framework'
+MoonStart = {
+    Cash = 250,
+    Bank = 1000
+}
+
+MoonEnableMinimap = false -- If set to false, minimap will be disabled if PED is outside a vehicle
+-------------------------------------------------------------
 
 for i = 48,  57 do NumberCharset[#NumberCharset+1] = string.char(i) end
 for i = 65,  90 do StringCharset[#StringCharset+1] = string.char(i) end
@@ -91,12 +101,15 @@ MoonShared.Trim = function(value)
     return (string.gsub(value, '^%s*(.-)%s*$', '%1'))
 end
 
+
+
 MoonShared.Round = function(value, numDecimalPlaces)
     if not numDecimalPlaces then return math.floor(value + 0.5) end
     local power = 10 ^ numDecimalPlaces
     return math.floor((value * power) + 0.5) / (power)
 end
 
-Moon.Items = {
-    ['item'] = {['name'] = 'testitem', ['label'] = 'Test Item', ['maxamount'] = 15, ['weight'] = 1000, ['description'] = 'A test Item', ['photo'] = ''}, 
+MoonItems = {
+    ['apple'] = {['name'] = 'apple', ['label'] = 'Apple', ['description'] = 'An apple. You can eat it if you want to :)', ['amount'] = 0, ['weight'] = 1, ['useable'] = true, ['removable'] = true, ['img'] = 'apple.png'},
+    ['pistol'] = {['name'] = 'WEAPON_PISTOL', ['label'] = 'Pistol', ['description'] = 'A pistol to shot dumbasses', ['amount'] = 0, ['useable'] = true, ['weight'] = 1,  ['removable'] = true, ['img'] = 'apple.png'},
 }
